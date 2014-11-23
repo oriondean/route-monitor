@@ -7,6 +7,22 @@ angular.module('myApp', [
   'myApp.home',
   'myApp.version'
 ]).
+
+service('AuthenticationService', [function() {
+	this.userLoggedIn = false;
+}]).
+
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/login'});
+	$routeProvider.when('/login', {
+			templateUrl: 'login/login.html',
+			controller: 'LoginCtrl',
+			controllerAs: 'controller'
+	}).when('/home', {
+			templateUrl: 'home/home.html',
+			controller: 'HomeCtrl',
+			controllerAs: 'controller'
+	}).otherwise({
+			redirectTo: '/login'
+	});
 }]);
+
