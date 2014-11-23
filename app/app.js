@@ -24,5 +24,17 @@ config(['$routeProvider', function($routeProvider) {
 	}).otherwise({
 			redirectTo: '/login'
 	});
-}]);
+}]).
 
+run(['$location', '$rootScope', 'AuthenticationService', function($location, $rootScope, authService) {
+		$rootScope.$on('$locationChangeStart', function() {
+
+			if($location.path() === '/login') {
+				return; // do nothing
+			}
+
+			if(!authService.userLoggedIn) {
+				$location.path('/login'); // redirect to login page
+			}
+		});
+}]);
